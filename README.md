@@ -24,8 +24,10 @@
 
 ### Components
 
-- [ ] Product Card
+- [ ] Product Card (Vertical)
+- [ ] Header
 - [ ] Button
+- [ ] Product Card (Horizontal)
 
 ### Screens
 

@@ -12,17 +12,12 @@ import WishlistScreen from '../screens/WishlistScreen';
 import COLORS from '../constants/colors';
 import ROUTES from '../constants/routes';
 
-// Components
-import CustomTabBar from '../components/navigation/CustomTabBar';
-import CustomTabBarButton from '../components/navigation/CustomTabBarButton';
-
 const BottomTabs = createBottomTabNavigator();
 
 const BottomTabBar = () => {
   return (
     <NavigationContainer>
       <BottomTabs.Navigator
-        tabBar={props => <CustomTabBar {...props} />}
         screenOptions={({route}) => ({
           headerTitleStyle: {display: 'none'},
           headerLeft: () => {
@@ -40,27 +35,9 @@ const BottomTabBar = () => {
             // TODO: Render Icons based on Route
           },
         })}>
-        <BottomTabs.Screen
-          name={ROUTES.HOME}
-          component={HomeScreen}
-          options={{
-            tabBarButton: props => <CustomTabBarButton {...props} />,
-          }}
-        />
-        <BottomTabs.Screen
-          name={ROUTES.CART}
-          component={CartScreen}
-          options={{
-            tabBarButton: props => <CustomTabBarButton {...props} />,
-          }}
-        />
-        <BottomTabs.Screen
-          name={ROUTES.WISHLIST}
-          component={WishlistScreen}
-          options={{
-            tabBarButton: props => <CustomTabBarButton {...props} />,
-          }}
-        />
+        <BottomTabs.Screen name={ROUTES.HOME} component={HomeScreen} />
+        <BottomTabs.Screen name={ROUTES.CART} component={CartScreen} />
+        <BottomTabs.Screen name={ROUTES.WISHLIST} component={WishlistScreen} />
       </BottomTabs.Navigator>
     </NavigationContainer>
   );
