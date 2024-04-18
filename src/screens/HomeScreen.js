@@ -24,7 +24,7 @@ const HomeScreen = () => {
         setIsFetching(false);
       } catch (error) {
         {
-          /** Handle Error **/
+          /** TODO: Handle Error **/
         }
         console.log(error);
       }
@@ -33,7 +33,7 @@ const HomeScreen = () => {
   }, [isFetching]);
 
   if (isFetching) {
-    return <View>{/** Show Loader **/}</View>;
+    return <View>{/** TODO: Show Loader **/}</View>;
   }
 
   return (
@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.primary200,
+    marginBottom: 92
   },
   header: {
     margin: 16,

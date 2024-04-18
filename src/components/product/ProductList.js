@@ -6,7 +6,7 @@ import Card from '../../components/product/Card';
 
 const ProductList = ({products, cardStyle}) => {
   const renderProduct = itemData => {
-    return <Card {...itemData.item} style={cardStyle} />;
+    return <Card product={itemData.item} style={cardStyle} />;
   };
 
   return (

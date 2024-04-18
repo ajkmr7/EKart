@@ -1,5 +1,7 @@
 // Libraries
-import {View, Text, StyleSheet, Dimensions} from 'react-native';
+import {useContext} from 'react';
+import {View, Text, StyleSheet, Dimensions, Pressable} from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 // Constants
 import COLORS from '../../constants/colors';
@@ -8,17 +10,48 @@ import COLORS from '../../constants/colors';
 import PreviewImage from './PreviewImage';
 import Title from '../reusable/Title';
 import Price from '../reusable/Price';
+import Rating from '../reusable/Rating';
+
+// App-Wide State Management
+import {WishlistContext} from '../../store/wishlist-context';
 
 const {width: screenWidth} = Dimensions.get('window');
 const cardWidth = screenWidth / 2 - 36;
 
-const Card = ({title, price, imageUrl, rating, style}) => {
+const Card = ({product, style}) => {
+  const wishlistContext = useContext(WishlistContext);
+
+  const wishlistedProducts = wishlistContext.products;
+  const isWishlisted = wishlistedProducts.includes(product);
+
+  const toggleWishlistStatusHandler = () => {
+    isWishlisted
+      ? wishlistContext.removeFromWishlist(product)
+      : wishlistContext.addToWishlist(product);
+  };
+
   return (
     <View style={[styles.card, style]}>
-      <PreviewImage imageUrl={imageUrl} />
-      <Title style={styles.title}>{title}</Title>
-      <Price style={styles.price} amount={price.toFixed(2)} type={'primary'} />
-      <Text>{rating.rate}</Text>
+      <Pressable onPress={toggleWishlistStatusHandler}>
+        <View style={styles.wishlistContainer}>
+          <Icon
+            name={isWishlisted ? 'heart' : 'heart-outline'}
+            size={24}
+            color={'red'}
+          />
+        </View>
+      </Pressable>
+
+      <View style={styles.innerContainer}>
+        <PreviewImage imageUrl={product.imageUrl} />
+        <Title style={styles.title}>{product.title}</Title>
+        <Price
+          style={styles.price}
+          amount={product.price.toFixed(2)}
+          type={'primary'}
+        />
+        <Rating style={styles.rating} rating={product.rating.rate} />
+      </View>
     </View>
   );
 };
@@ -40,6 +73,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.07,
     shadowRadius: 2,
     elevation: 3,
+  },
+  wishlistContainer: {
+    alignItems: 'flex-end',
+  },
+  innerContainer: {
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -52,4 +90,7 @@ const styles = StyleSheet.create({
   price: {
     margin: 4,
   },
+  rating: {
+    marginTop: 12
+  }
 });

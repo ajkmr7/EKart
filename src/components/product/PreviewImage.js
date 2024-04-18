@@ -11,7 +11,7 @@ const getRandomBackdropColor = () => {
   return BACKDROPCOLORS[randomIndex];
 };
 
-const PreviewImage = ({imageUrl}) => {
+const PreviewImage = React.memo(({imageUrl}) => {
   const backdropColor = getRandomBackdropColor();
   return (
     <View style={[styles.outerCircle, {borderColor: backdropColor}]}>
@@ -19,7 +19,7 @@ const PreviewImage = ({imageUrl}) => {
       {imageUrl && <Image source={{uri: imageUrl}} style={styles.image} />}
     </View>
   );
-};
+});
 
 export default PreviewImage;
 
@@ -32,6 +32,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: COLORS.primary100,
+    shadowOffset: {
+      width: 5,
+      height: 5,
+    },
+    shadowOpacity: 0.15,
+    shadowRadius: 3,
+    elevation: 3,
   },
   innerCircle: {
     borderWidth: 55,
