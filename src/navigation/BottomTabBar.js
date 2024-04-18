@@ -27,19 +27,12 @@ const BottomTabBar = () => {
           <BottomTabs.Navigator
             screenOptions={({route}) => ({
               headerTitleStyle: {display: 'none'},
-              headerLeft: () => {
-                // TODO: Add Drawer
-              },
-              headerRight: () => {
-                return (
-                  <View style={{marginHorizontal: 16}}>
-                    <Icon name="search" color={COLORS.gray700} size={22} />
-                  </View>
-                );
-              },
               headerStyle: {
                 backgroundColor: COLORS.primary200,
                 shadowOffset: 0,
+              },
+              headerLeft: () => {
+                // TODO: Add Drawer
               },
               tabBarShowLabel: false,
               tabBarInactiveTintColor: COLORS.gray700,
@@ -63,8 +56,32 @@ const BottomTabBar = () => {
                 return <Icon name={iconName} color={color} size={size} />;
               },
             })}>
-            <BottomTabs.Screen name={ROUTES.HOME} component={HomeScreen} />
-            <BottomTabs.Screen name={ROUTES.CART} component={CartScreen} />
+            <BottomTabs.Screen
+              name={ROUTES.HOME}
+              component={HomeScreen}
+              options={{
+                headerRight: () => {
+                  return (
+                    <View style={{marginHorizontal: 16}}>
+                      <Icon name="search" color={COLORS.gray700} size={20} />
+                    </View>
+                  );
+                },
+              }}
+            />
+            <BottomTabs.Screen
+              name={ROUTES.CART}
+              component={CartScreen}
+              options={{
+                headerRight: () => {
+                  return (
+                    <View style={{marginHorizontal: 16}}>
+                      <Icon name="trash" color={COLORS.gray500} size={22} />
+                    </View>
+                  );
+                },
+              }}
+            />
             <BottomTabs.Screen
               name={ROUTES.WISHLIST}
               component={WishlistScreen}

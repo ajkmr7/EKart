@@ -11,15 +11,37 @@ const CartContextProvider = ({children}) => {
   const [cartProducts, setCartProducts] = useState([]);
 
   const addToCart = product => {
-    setCartProducts(currentCartProducts => [...currentCartProducts, product]);
+    setCartProducts(currentCartProducts => {
+      const index = currentCartProducts.findIndex(
+        prod => prod.id === product.id,
+      );
+      if (index == -1) {
+        return [...currentCartProducts, {...product, quantity: 1}];
+      }
+      const updatedCartProducts = [...currentCartProducts];
+      updatedCartProducts[index] = {
+        ...updatedCartProducts[index],
+        quantity: updatedCartProducts[index].quantity + 1,
+      };
+      return updatedCartProducts;
+    });
   };
 
   const removeFromCart = product => {
-    setCartProducts(currentCartProducts =>
-      currentCartProducts.filter(
-        currentCartProduct => currentCartProduct.id !== product.id,
-      ),
-    );
+    setCartProducts(currentCartProducts => {
+      const index = currentCartProducts.findIndex(
+        prod => prod.id === product.id,
+      );
+      if (currentCartProducts[index].quantity == 1) {
+        return currentCartProducts.filter(prod => prod.id !== product.id);
+      }
+      const updatedCartProducts = [...currentCartProducts];
+      updatedCartProducts[index] = {
+        ...updatedCartProducts[index],
+        quantity: updatedCartProducts[index].quantity - 1,
+      };
+      return updatedCartProducts;
+    });
   };
 
   const value = {

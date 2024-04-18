@@ -1,12 +1,12 @@
 // Libraries
-import {FlatList, Text} from 'react-native';
+import {FlatList} from 'react-native';
 
 // Components
-import Card from '../../components/product/Card';
+import VerticalCard from './VerticalCard';
 
 const ProductList = ({products, cardStyle}) => {
   const renderProduct = itemData => {
-    return <Card product={itemData.item} style={cardStyle} />;
+    return <VerticalCard product={itemData.item} style={cardStyle} />;
   };
 
   return (

@@ -6,7 +6,7 @@ import {View, StyleSheet} from 'react-native';
 import COLORS from '../constants/colors';
 
 // Components
-import ProductList from '../components/product/ProductList';
+import CartList from '../components/cart/CartList';
 import Header from '../components/reusable/Header';
 
 // App-Wide State Management
@@ -22,7 +22,7 @@ const CartScreen = () => {
   if (cartProducts.length > 0) {
     content = (
       <View style={styles.container}>
-        <ProductList products={cartProducts} cardStyle={styles.card} />
+        <CartList products={cartProducts} cardStyle={styles.card} />
       </View>
     );
   }
@@ -41,12 +41,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.primary200,
-    marginBottom: 92
   },
   header: {
     margin: 16,
   },
   card: {
-    margin: 16,
+    marginHorizontal: 16,
+    marginVertical: 4,
   },
 });

@@ -2,11 +2,13 @@
 
 ## Feature Checklist
 
-- [ ] Showing Product List
+- [x] Showing Product List
+- [x] Wishlisting
+- [x] Adding to Cart
 - [ ] Showing Product Details
-- [ ] Wishlisting
-- [ ] Adding to Cart
 - [ ] Category Based Filtering
+- [ ] Search
+- [ ] Local Storage
 
 ## Technical TODOs
 
@@ -14,7 +16,7 @@
 
 - [x] Folder Structure
 - [x] Colors
-- [ ] Icons
+- [x] Icons
 
 ### Navigation
 
@@ -24,22 +26,19 @@
 
 ### Components
 
-- [ ] Product Card (Vertical)
-- [ ] Header
-- [ ] Button
-- [ ] Product Card (Horizontal)
+- [x] Product Card (Vertical)
+- [x] Header
+- [x] Button
+- [x] Product Card (Horizontal)
 
 ### Screens
 
-- [ ] Home (Products List)
-- [ ] Wishlist
+- [x] Home (Products List)
+- [x] Wishlist
+- [x] Cart
 - [ ] Product Details
-
-### Utils
-
-- [ ] Currency Formatting
 
 ### Network calls & Data Mapping
 
-- [ ] products
+- [x] products
 - [ ] product/{id}

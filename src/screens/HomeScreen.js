@@ -39,7 +39,7 @@ const HomeScreen = () => {
   return (
     <View style={styles.container}>
       <Header style={styles.header}>Our Product</Header>
-      <ProductList products={products} cardStyle={styles.card}/>
+      <ProductList products={products} cardStyle={styles.card} />
     </View>
   );
 };
@@ -50,12 +50,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.primary200,
-    marginBottom: 92
   },
   header: {
     margin: 16,
   },
   card: {
-    margin: 16,
-  }
+    marginVertical: 12,
+    marginHorizontal: 16
+  },
 });

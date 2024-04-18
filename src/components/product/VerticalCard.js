@@ -7,19 +7,21 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import COLORS from '../../constants/colors';
 
 // Components
-import PreviewImage from './PreviewImage';
+import PreviewImage from '../reusable/PreviewImage';
 import Title from '../reusable/Title';
 import Price from '../reusable/Price';
 import Rating from '../reusable/Rating';
 
 // App-Wide State Management
 import {WishlistContext} from '../../store/wishlist-context';
+import {CartContext} from '../../store/cart-context';
 
 const {width: screenWidth} = Dimensions.get('window');
 const cardWidth = screenWidth / 2 - 36;
 
-const Card = ({product, style}) => {
+const VerticalCard = ({product, style}) => {
   const wishlistContext = useContext(WishlistContext);
+  const cartContext = useContext(CartContext);
 
   const wishlistedProducts = wishlistContext.products;
   const isWishlisted = wishlistedProducts.includes(product);
@@ -30,33 +32,39 @@ const Card = ({product, style}) => {
       : wishlistContext.addToWishlist(product);
   };
 
-  return (
-    <View style={[styles.card, style]}>
-      <Pressable onPress={toggleWishlistStatusHandler}>
-        <View style={styles.wishlistContainer}>
-          <Icon
-            name={isWishlisted ? 'heart' : 'heart-outline'}
-            size={24}
-            color={'red'}
-          />
-        </View>
-      </Pressable>
+  const addToCartHandler = () => {
+    cartContext.addToCart(product)
+  };
 
-      <View style={styles.innerContainer}>
-        <PreviewImage imageUrl={product.imageUrl} />
-        <Title style={styles.title}>{product.title}</Title>
-        <Price
-          style={styles.price}
-          amount={product.price.toFixed(2)}
-          type={'primary'}
-        />
-        <Rating style={styles.rating} rating={product.rating.rate} />
+  return (
+    <Pressable onPress={addToCartHandler}>
+      <View style={[styles.card, style]}>
+        <Pressable onPress={toggleWishlistStatusHandler}>
+          <View style={styles.wishlistContainer}>
+            <Icon
+              name={isWishlisted ? 'heart' : 'heart-outline'}
+              size={24}
+              color={'red'}
+            />
+          </View>
+        </Pressable>
+
+        <View style={styles.innerContainer}>
+          <PreviewImage imageUrl={product.imageUrl} type="big"/>
+          <Title style={styles.title}>{product.title}</Title>
+          <Price
+            style={styles.price}
+            amount={product.price.toFixed(2)}
+            type={'primary'}
+          />
+          <Rating style={styles.rating} rating={product.rating.rate} />
+        </View>
       </View>
-    </View>
+    </Pressable>
   );
 };
 
-export default Card;
+export default VerticalCard;
 
 const styles = StyleSheet.create({
   card: {
@@ -91,6 +99,6 @@ const styles = StyleSheet.create({
     margin: 4,
   },
   rating: {
-    marginTop: 12
-  }
+    marginTop: 12,
+  },
 });

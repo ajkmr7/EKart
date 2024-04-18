@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
     margin: 16,
   },
   card: {
-    margin: 16,
+    marginVertical: 12,
+    marginHorizontal: 16,
   },
 });
