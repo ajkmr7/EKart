@@ -6,7 +6,7 @@ import {View, StyleSheet} from 'react-native';
 import COLORS from '../constants/colors';
 
 // Components
-import ProductList from '../components/product/ProductList';
+import ProductList from '../components/home/ProductList';
 import Header from '../components/reusable/Header';
 
 // App-Wide State Management

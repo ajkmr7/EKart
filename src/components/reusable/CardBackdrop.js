@@ -11,7 +11,7 @@ const getRandomBackdropColor = () => {
   return BACKDROPCOLORS[randomIndex];
 };
 
-const PreviewImage = React.memo(({imageUrl, type}) => {
+const CardBackdrop = React.memo(({imageUrl, type}) => {
   const backdropColor = getRandomBackdropColor();
 
   const outerCircleStyling =
@@ -34,7 +34,7 @@ const PreviewImage = React.memo(({imageUrl, type}) => {
   );
 });
 
-export default PreviewImage;
+export default CardBackdrop;
 
 const styles = StyleSheet.create({
   bigOuterCircle: {

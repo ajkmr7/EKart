@@ -1,12 +1,14 @@
 // Libraries
 import {useContext} from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet, Text, Pressable} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
 // Constants
 import COLORS from '../../constants/colors';
+import ROUTES from '../../constants/routes';
 
 // Components
-import PreviewImage from '../reusable/PreviewImage';
+import CardBackdrop from '../reusable/CardBackdrop';
 import Title from '../reusable/Title';
 import Price from '../reusable/Price';
 import IconButton from '../reusable/IconButton';
@@ -16,6 +18,13 @@ import {CartContext} from '../../store/cart-context';
 
 const Card = ({product, style}) => {
   const cartContext = useContext(CartContext);
+  const navigation = useNavigation();
+
+  const handleCardTap = () => {
+    navigation.navigate(ROUTES.PRODUCT_DETAILS, {
+      product: product,
+    });
+  };
 
   const addToCartHandler = () => {
     cartContext.addToCart(product);
@@ -26,28 +35,32 @@ const Card = ({product, style}) => {
   };
 
   return (
-    <View style={[styles.card, style]}>
-      <PreviewImage imageUrl={product.imageUrl} type="small" />
-      <View style={styles.detailContainer}>
-        <Title style={styles.title}>{product.title}</Title>
-        <Price amount={product.price.toFixed(2)} type={'primary'} />
+    <Pressable onPress={handleCardTap}>
+      <View style={[styles.card, style]}>
+        <CardBackdrop imageUrl={product.imageUrl} type="small" />
+        <View style={styles.detailContainer}>
+          <Title style={styles.title} type={'secondary'}>
+            {product.title}
+          </Title>
+          <Price amount={product.price.toFixed(2)} type={'primary'} />
+        </View>
+        <View style={styles.buttonContainer}>
+          <IconButton
+            name={'remove'}
+            size={24}
+            color={COLORS.primary100}
+            onPress={removeFromCartHandler}
+          />
+          <Text style={styles.quantityText}>{product.quantity}</Text>
+          <IconButton
+            name={'add'}
+            size={24}
+            color={COLORS.accent500}
+            onPress={addToCartHandler}
+          />
+        </View>
       </View>
-      <View style={styles.buttonContainer}>
-        <IconButton
-          name={'remove'}
-          size={24}
-          color={COLORS.primary100}
-          onPress={removeFromCartHandler}
-        />
-        <Text>{product.quantity}</Text>
-        <IconButton
-          name={'add'}
-          size={24}
-          color={COLORS.accent500}
-          onPress={addToCartHandler}
-        />
-      </View>
-    </View>
+    </Pressable>
   );
 };
 
@@ -83,5 +96,10 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flex: 1,
     alignItems: 'center',
+  },
+  quantityText: {
+    marginVertical: 6,
+    fontSize: 16,
+    color: COLORS.gray700,
   },
 });

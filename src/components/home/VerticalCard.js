@@ -1,27 +1,28 @@
 // Libraries
 import {useContext} from 'react';
-import {View, Text, StyleSheet, Dimensions, Pressable} from 'react-native';
+import {View, StyleSheet, Dimensions, Pressable} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {useNavigation} from '@react-navigation/native';
 
 // Constants
 import COLORS from '../../constants/colors';
+import ROUTES from '../../constants/routes';
 
 // Components
-import PreviewImage from '../reusable/PreviewImage';
+import CardBackdrop from '../reusable/CardBackdrop';
 import Title from '../reusable/Title';
 import Price from '../reusable/Price';
 import Rating from '../reusable/Rating';
 
 // App-Wide State Management
 import {WishlistContext} from '../../store/wishlist-context';
-import {CartContext} from '../../store/cart-context';
 
 const {width: screenWidth} = Dimensions.get('window');
 const cardWidth = screenWidth / 2 - 36;
 
 const VerticalCard = ({product, style}) => {
   const wishlistContext = useContext(WishlistContext);
-  const cartContext = useContext(CartContext);
+  const navigation = useNavigation();
 
   const wishlistedProducts = wishlistContext.products;
   const isWishlisted = wishlistedProducts.includes(product);
@@ -32,12 +33,14 @@ const VerticalCard = ({product, style}) => {
       : wishlistContext.addToWishlist(product);
   };
 
-  const addToCartHandler = () => {
-    cartContext.addToCart(product)
+  const handleCardTap = () => {
+    navigation.navigate(ROUTES.PRODUCT_DETAILS, {
+      product: product,
+    });
   };
 
   return (
-    <Pressable onPress={addToCartHandler}>
+    <Pressable onPress={handleCardTap}>
       <View style={[styles.card, style]}>
         <Pressable onPress={toggleWishlistStatusHandler}>
           <View style={styles.wishlistContainer}>
@@ -50,8 +53,10 @@ const VerticalCard = ({product, style}) => {
         </Pressable>
 
         <View style={styles.innerContainer}>
-          <PreviewImage imageUrl={product.imageUrl} type="big"/>
-          <Title style={styles.title}>{product.title}</Title>
+          <CardBackdrop imageUrl={product.imageUrl} type="big" />
+          <Title style={styles.title} type={'secondary'}>
+            {product.title}
+          </Title>
           <Price
             style={styles.price}
             amount={product.price.toFixed(2)}

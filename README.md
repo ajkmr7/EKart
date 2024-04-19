@@ -5,9 +5,11 @@
 - [x] Showing Product List
 - [x] Wishlisting
 - [x] Adding to Cart
-- [ ] Showing Product Details
+- [x] Showing Product Details
+
 - [ ] Category Based Filtering
-- [ ] Search
+- [ ] Search Functionality
+- [ ] Firebase Integration for Wishlist and Cart
 - [ ] Local Storage
 
 ## Technical TODOs
@@ -22,7 +24,6 @@
 
 - [x] Placeholder bottom nav bar (home, Wishlist, cart)
 - [ ] Custom bottom nav bar
-- [ ] Drawer
 
 ### Components
 
@@ -30,15 +31,15 @@
 - [x] Header
 - [x] Button
 - [x] Product Card (Horizontal)
+- [ ] Loading, Error and Empty States
 
 ### Screens
 
 - [x] Home (Products List)
 - [x] Wishlist
 - [x] Cart
-- [ ] Product Details
+- [x] Product Details
 
 ### Network calls & Data Mapping
 
 - [x] products
-- [ ] product/{id}

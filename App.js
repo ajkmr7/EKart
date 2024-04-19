@@ -1,6 +1,6 @@
 // Navigation
-import BottomTabBar from './src/navigation/BottomTabBar';
+import StackNavigator from './src/navigation/StackNavigator';
 
 export default function App() {
-  return <BottomTabBar />;
+  return <StackNavigator />;
 }

@@ -9,7 +9,7 @@ import {fetchProducts} from '../api/product-service';
 import COLORS from '../constants/colors';
 
 // Components
-import ProductList from '../components/product/ProductList';
+import ProductList from '../components/home/ProductList';
 import Header from '../components/reusable/Header';
 
 const HomeScreen = () => {
