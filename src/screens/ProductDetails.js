@@ -38,7 +38,7 @@ const ProductDetails = ({route, navigation}) => {
           <Icon
             name="arrow-back"
             color={COLORS.gray700}
-            size={20}
+            size={22}
             onPress={() => navigation.goBack()}
           />
         ),
@@ -46,7 +46,7 @@ const ProductDetails = ({route, navigation}) => {
           <Icon
             name="heart-outline"
             color={'red'}
-            size={20}
+            size={22}
             onPress={() => navigation.goBack()}
           />
         ),
@@ -67,9 +67,10 @@ const ProductDetails = ({route, navigation}) => {
     cartContext.removeFromCart(product);
   };
 
-  const quantity = isProductInCart
-    ? cartContext.products[productIndex].quantity
-    : 0;
+  const quantity =
+    isProductInCart && productIndex !== -1
+      ? cartContext.products[productIndex].quantity
+      : 0;
 
   const addToCartButton = isProductInCart ? (
     <View style={styles.buttonContainer}>

@@ -1,27 +1,77 @@
 // Libraries
-import {useEffect, useState} from 'react';
-import {View, StyleSheet} from 'react-native';
-
-// Network
-import {fetchProducts} from '../api/product-service';
+import React, {useEffect, useState} from 'react';
+import {View, StyleSheet, ActivityIndicator} from 'react-native';
 
 // Constants
 import COLORS from '../constants/colors';
 
 // Components
-import ProductList from '../components/home/ProductList';
 import Header from '../components/reusable/Header';
+import Categories from '../components/home/Categories';
+import ProductList from '../components/home/ProductList';
+
+// Network
+import {fetchProducts, fetchCategories} from '../api/product-service';
 
 const HomeScreen = () => {
-  const [products, setProducts] = useState([]);
-  const [isFetching, setIsFetching] = useState(true);
+  const [state, setState] = useState({
+    products: [],
+    filteredProducts: [],
+    appliedFilters: [],
+    categories: [],
+    isFetching: true,
+  });
+
+  const toggleFilter = filter => {
+    setState(prevState => {
+      if (prevState.appliedFilters.includes(filter)) {
+        return {
+          ...prevState,
+          appliedFilters: prevState.appliedFilters.filter(
+            appliedFilter => appliedFilter !== filter,
+          ),
+        };
+      } else {
+        return {
+          ...prevState,
+          appliedFilters: [...prevState.appliedFilters, filter],
+        };
+      }
+    });
+  };
+
+  const filterProducts = () => {
+    const {products, appliedFilters} = state;
+    if (appliedFilters.length === 0) {
+      setState(prevState => ({
+        ...prevState,
+        filteredProducts: products,
+      }));
+    } else {
+      setState(prevState => ({
+        ...prevState,
+        filteredProducts: products.filter(product => {
+          const productCategory = product.category.toLowerCase();
+          return appliedFilters.some(
+            filter => filter.toLowerCase() === productCategory,
+          );
+        }),
+      }));
+    }
+  };
 
   useEffect(() => {
     async function getProducts() {
       try {
         const fetchedProducts = await fetchProducts();
-        setProducts(fetchedProducts);
-        setIsFetching(false);
+        const fetchedCategories = await fetchCategories();
+        setState(prevState => ({
+          ...prevState,
+          products: fetchedProducts,
+          filteredProducts: fetchedProducts,
+          categories: fetchedCategories,
+          isFetching: false,
+        }));
       } catch (error) {
         {
           /** TODO: Handle Error **/
@@ -30,16 +80,25 @@ const HomeScreen = () => {
       }
     }
     getProducts();
-  }, [isFetching]);
+  }, [state.isFetching]);
 
-  if (isFetching) {
-    return <View>{/** TODO: Show Loader **/}</View>;
+  useEffect(() => {
+    filterProducts();
+  }, [state.appliedFilters, state.products]);
+
+  if (state.isFetching) {
+    return (
+      <View style={[styles.container, styles.loader]}>
+        <ActivityIndicator size="large" color={COLORS.primary800} />
+      </View>
+    );
   }
 
   return (
     <View style={styles.container}>
       <Header style={styles.header}>Our Product</Header>
-      <ProductList products={products} cardStyle={styles.card} />
+      <Categories data={state.categories} toggleFilter={toggleFilter} />
+      <ProductList products={state.filteredProducts} cardStyle={styles.card} />
     </View>
   );
 };
@@ -56,6 +115,10 @@ const styles = StyleSheet.create({
   },
   card: {
     marginVertical: 12,
-    marginHorizontal: 16
+    marginHorizontal: 16,
+  },
+  loader: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

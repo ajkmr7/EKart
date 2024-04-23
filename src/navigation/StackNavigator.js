@@ -7,7 +7,6 @@ import BottomTabBar from './BottomTabBar';
 
 // Constants
 import ROUTES from '../constants/routes';
-import COLORS from '../constants/colors';
 
 // App-Wide State Management
 import WishlistContextProvider from '../store/wishlist-context';
@@ -31,13 +30,6 @@ const StackNavigator = () => (
           <Stack.Screen
             name={ROUTES.PRODUCT_DETAILS}
             component={ProductDetails}
-            options={{
-              headerTitleStyle: {display: 'none'},
-              headerStyle: {
-                backgroundColor: COLORS.primary100,
-                shadowOffset: 0,
-              },
-            }}
           />
         </Stack.Navigator>
       </NavigationContainer>

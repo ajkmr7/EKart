@@ -1,6 +1,6 @@
 // Libraries
 import {useContext} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Text} from 'react-native';
 
 // Constants
 import COLORS from '../constants/colors';
@@ -15,7 +15,11 @@ import {WishlistContext} from '../store/wishlist-context';
 const WishlistScreen = () => {
   const wishlistContext = useContext(WishlistContext);
 
-  let content = <View>{/** TODO: Fallback Text **/}</View>;
+  let content = (
+    <View style={styles.emptyContainer}>
+      <Text style={styles.emptyText}>You have no items in your wishlist.</Text>
+    </View>
+  );
 
   const wishlistedProducts = wishlistContext.products;
 
@@ -48,5 +52,16 @@ const styles = StyleSheet.create({
   card: {
     marginVertical: 12,
     marginHorizontal: 16,
+  },
+  emptyContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 36
+  },
+  emptyText: {
+    fontSize: 18,
+    color: COLORS.gray700,
+    fontWeight: "bold"
   },
 });

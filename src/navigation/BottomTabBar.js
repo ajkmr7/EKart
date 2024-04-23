@@ -27,7 +27,7 @@ const BottomTabBar = () => {
         headerLeft: () => {
           return (
             <View style={{marginHorizontal: 16}}>
-              <Icon name="menu" color={COLORS.gray700} size={20} />
+              <Icon name="menu" color={COLORS.gray700} size={22} />
             </View>
           );
         },
@@ -60,25 +60,13 @@ const BottomTabBar = () => {
           headerRight: () => {
             return (
               <View style={{marginHorizontal: 16}}>
-                <Icon name="search" color={COLORS.gray700} size={20} />
+                <Icon name="search" color={COLORS.gray700} size={22} />
               </View>
             );
           },
         }}
       />
-      <BottomTabs.Screen
-        name={ROUTES.CART}
-        component={CartScreen}
-        options={{
-          headerRight: () => {
-            return (
-              <View style={{marginHorizontal: 16}}>
-                <Icon name="trash" color={COLORS.gray500} size={20} />
-              </View>
-            );
-          },
-        }}
-      />
+      <BottomTabs.Screen name={ROUTES.CART} component={CartScreen}/>
       <BottomTabs.Screen name={ROUTES.WISHLIST} component={WishlistScreen} />
     </BottomTabs.Navigator>
   );

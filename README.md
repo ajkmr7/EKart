@@ -7,7 +7,7 @@
 - [x] Adding to Cart
 - [x] Showing Product Details
 
-- [ ] Category Based Filtering
+- [x] Category Based Filtering
 - [ ] Search Functionality
 - [ ] Firebase Integration for Wishlist and Cart
 - [ ] Local Storage
@@ -23,6 +23,7 @@
 ### Navigation
 
 - [x] Placeholder bottom nav bar (home, Wishlist, cart)
+- [ ] Drawer
 - [ ] Custom bottom nav bar
 
 ### Components
@@ -43,3 +44,4 @@
 ### Network calls & Data Mapping
 
 - [x] products
+- [x] categories

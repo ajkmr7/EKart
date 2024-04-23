@@ -3,11 +3,12 @@ import axios from 'axios';
 
 // Constants
 import NETWORKCONFIG from '../constants/network-config';
-
-const productsEndpoint = '/products';
+import APIEndpoints from './APIEndpoints';
 
 export async function fetchProducts() {
-  const response = await axios.get(NETWORKCONFIG.baseURL + productsEndpoint);
+  const response = await axios.get(
+    NETWORKCONFIG.baseURL + APIEndpoints.products,
+  );
 
   const products = response.data.map(product => {
     return {
@@ -21,4 +22,12 @@ export async function fetchProducts() {
     };
   });
   return products;
+}
+
+export async function fetchCategories() {
+  const response = await axios.get(
+    NETWORKCONFIG.baseURL + APIEndpoints.categories,
+  );
+
+  return response.data;
 }

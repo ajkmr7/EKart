@@ -1,6 +1,7 @@
 // Libraries
-import {useContext} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {useContext, useLayoutEffect} from 'react';
+import {View, StyleSheet, TouchableOpacity, Alert, Text} from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 // Constants
 import COLORS from '../constants/colors';
@@ -12,10 +13,55 @@ import Header from '../components/reusable/Header';
 // App-Wide State Management
 import {CartContext} from '../store/cart-context';
 
-const CartScreen = () => {
+const CartScreen = ({navigation}) => {
   const cartContext = useContext(CartContext);
 
-  let content = <View>{/** TODO: Fallback Text **/}</View>;
+  const handleTrashPress = () => {
+    Alert.alert(
+      'Clear Cart',
+      'Are you sure you want to clear your cart?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Clear',
+          onPress: clearCartHandler,
+          style: 'destructive',
+        },
+      ],
+      {cancelable: true},
+    );
+  };
+
+  const clearCartHandler = () => {
+    cartContext.clearCart();
+  };
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity
+          onPress={handleTrashPress}
+          disabled={cartContext.products.length === 0}>
+          <View
+            style={{
+              marginHorizontal: 16,
+              opacity: cartContext.products.length === 0 ? 0.5 : 1,
+            }}>
+            <Icon name="trash" color={COLORS.gray500} size={22} />
+          </View>
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation, cartContext.products.length]);
+
+  let content = (
+    <View style={styles.emptyContainer}>
+      <Text style={styles.emptyText}>Your cart is empty.</Text>
+    </View>
+  );
 
   const cartProducts = cartContext.products;
 
@@ -48,5 +94,16 @@ const styles = StyleSheet.create({
   card: {
     marginHorizontal: 16,
     marginVertical: 4,
+  },
+  emptyContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 36,
+  },
+  emptyText: {
+    fontSize: 18,
+    color: COLORS.gray700,
+    fontWeight: 'bold',
   },
 });
